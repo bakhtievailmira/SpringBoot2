@@ -1,7 +1,8 @@
 package com.example.springboot2.controller;
 
 import com.example.springboot2.model.User;
-import com.example.springboot2.dao.UserDao;
+import com.example.springboot2.dao.UserRepository;
+import com.example.springboot2.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,46 +13,46 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
 
-    private final UserDao userDao;
+    private UserService userService;
 
-    public UserController(UserDao userDao) {
-        this.userDao = userDao;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
 
     @GetMapping("/new")
-    public String newUser(@ModelAttribute("user") User user){
+    public String newUser(@ModelAttribute("user") User user) {
         return "new";
     }
 
     @PostMapping()
     public String creatUser(@ModelAttribute("user") User user) {
-        userDao.save(user);
+        userService.save(user);
         return "redirect:/users";
     }
 
     @GetMapping()
     public String showUserList(Model model) {
-        model.addAttribute("users", userDao.findAll());
+        model.addAttribute("users", userService.findAll());
         return "users";
     }
+
     @GetMapping("/{id}/edit")
     public String showUpdateForm(@PathVariable("id") long id, Model model) {
-        model.addAttribute("user",  userDao.findById(id));
+        model.addAttribute("user", userService.findById(id));
         return "edit";
     }
 
-    @PatchMapping("/{id}/edit")
-    public String update(@ModelAttribute ("user") User user){
-        userDao.save(user);
-        return  "redirect:/users";
+    @PutMapping("/{id}/edit")
+    public String update(@ModelAttribute("user") User user) {
+        userService.save(user);
+        return "redirect:/users";
     }
 
 
-
-    @GetMapping("/{id}/delete")
-    public String deleteUser(@PathVariable("id") long id, Model model) {
-        userDao.deleteById(id);
+    @DeleteMapping("/{id}")
+    public String deleteUser(@PathVariable("id") long id) {
+        userService.deleteById(id);
         return "redirect:/users";
     }
 

@@ -5,7 +5,7 @@
     <title>Update User</title>
 </head>
 <body>
-<form th:method= "patch" th:action="@{http://localhost:8080/users/{id}/edit(id=${user.getId()})}"  th:object="${user}">
+<form th:method= "PUT" th:action="@{http://localhost:8080/users/{id}/edit(id=${user.getId()})}"  th:object="${user}">
     <label for="name"> Имя пользователя: </label>
     <input type="text" th:field="*{name}" id="name"/>
     <br/>

@@ -27,7 +27,9 @@
             <a th:href="@{http://localhost:8080/users/{id}/edit(id=${user.getId()})}">Редактировать</a>
         </td>
         <td>
-            <a th:href="@{http://localhost:8080/users/{id}/delete(id=${user.getId()})}">Удалить</a>
+            <form th:method="DELETE" th:action="@{http://localhost:8080/users/{id}(id=${user.getId()})}">
+                <input type="submit" value="Удалить"/>
+            </form>
         </td>
 
     </tr>
